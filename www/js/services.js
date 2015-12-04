@@ -3,11 +3,11 @@ angular.module('app.services', [])
 .factory('Database', function($http, $q, SERVER) {
 
     var o = {
-        itemList: []
+        itemList : []
     };
 
+
     o.getItemFromBarcode = function (barcode) {
-        var item = {};
 
         return $http({
             method: 'GET',
@@ -18,9 +18,17 @@ angular.module('app.services', [])
             }
         }).success(function (data) {
             //merge the data into the queue
-            item = data;
-            o.itemList.push(item);
+
+            o.itemList.push(data);
         });
+    };
+
+    o.removeItemFromList = function (item, index) {
+        // make sure there's an item to remove
+        if (!item) return false;
+
+        // add to favorites array
+        o.itemList.splice(index, 1);
     };
 
     return o;
