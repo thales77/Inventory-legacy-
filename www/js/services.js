@@ -19,7 +19,7 @@ angular.module('app.services', [])
         }).success(function (data) {
             //merge the data into the queue
 
-            o.itemList.push(data);
+            o.itemList.unshift(data);
         });
     };
 

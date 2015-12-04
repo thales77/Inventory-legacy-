@@ -10,7 +10,7 @@ angular.module('app.controllers', [])
             if (barcodeBool) {
                 Database.getItemFromBarcode(searchString).success(function () {
                     $scope.items = Database.itemList;
-                    $scope.searchString = "";
+                    $scope.searchString = {value: ""};
                 });
             } else {
                 return;
