@@ -1,13 +1,13 @@
 <ion-view title="Inventario">
     <ion-content padding="'true'" style="background: url(img/WY5H4QubRBumgb9dVIQ9_splash-bkg.jpg) no-repeat center;" class="has-header">
         <form class="list">
-            <label class="item item-input" name="SearchField">
+            <label class="item item-input" id="searchField" name="Search" focus-me>
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="Articolo" ng-model="searchString">
+                <input type="search" placeholder="Articolo" ng-model="form.searchString">
             </label>
             <div class="spacer" style="width: 300px; height: 21px;"></div>
-            <ion-toggle toggle-class="toggle-positive" name="BarcodeToggle" ng-model="barcode.checked" ng-checked="barcode.checked">Barcode</ion-toggle>
-            <button class="button button-positive button-block button-large icon-left ion-ios-barcode-outline" ng-click="getItem(searchString, barcode.checked)">Vai</button>
+            <ion-toggle toggle-class="toggle-positive" name="BarcodeToggle" ng-model="form.barcodeToggle" ng-checked="form.barcodeToggle">Barcode</ion-toggle>
+            <button class="button button-positive button-block button-large icon-left ion-ios-barcode-outline" ng-click="getItem(form.searchString, form.barcodeToggle)">Vai</button>
         </form>
         <ion-list>
             <ion-item ng-repeat="item in items">
