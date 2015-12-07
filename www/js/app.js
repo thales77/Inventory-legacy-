@@ -48,5 +48,5 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
         //url: 'http://192.168.0.245/phonegapsrv'
 
         // Public server
-        url: 'http://85.33.180.83/phonegapsrv'
+        url: 'http://85.33.180.83/test/phonegapsrv'
     });

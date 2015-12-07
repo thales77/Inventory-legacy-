@@ -35,10 +35,17 @@ angular.module('app.controllers', [])
                 Database.getItemFromBarcode(searchString).success(function () {
                     hideLoading();
                     $scope.qtyModal.show();
+                }, function (response){
+
+                    $ionicPopup.alert({
+                        title: 'Errore',
+                        template: 'Articolo non trovato'
+                    }).then( function () {
+                        console.log(response);
+                        document.getElementById("searchField").focus();
+                    });
+
                 });
-            } else {
-                document.getElementById("searchField").focus();
-                return;
             }
         }
     };

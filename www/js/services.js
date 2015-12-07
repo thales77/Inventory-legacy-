@@ -17,12 +17,8 @@ angular.module('app.services', [])
                 fasciaSconto:3
             }
         }).success(function (data) {
-
-            if(data.codiceArticolo){
-                //merge the data into the queue
-                o.itemList.unshift(data);
-            }
-
+           //merge the data into the queue
+            o.itemList.unshift(data);
         });
     };
 
