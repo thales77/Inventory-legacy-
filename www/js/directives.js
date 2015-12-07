@@ -1,11 +1,17 @@
 angular.module('app.directives', [])
 
-    .directive('focusMe', function($timeout) {
+    .directive('focusMe', function ($timeout) {
         return {
-            link: function(scope, element, attrs) {
-                $timeout(function() {
+            link: function (scope, element, attrs) {
+                if (attrs.focusMeDisable === "true") {
+                    return;
+                }
+                $timeout(function () {
                     element[0].focus();
-                }, 150);
+                    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+                        cordova.plugins.Keyboard.show(); //open keyboard manually
+                    }
+                }, 350);
             }
         };
     });

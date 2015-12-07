@@ -1,19 +1,40 @@
 angular.module('app.controllers', [])
   
-.controller('inventarioCtrl', function($scope, Database) {
+.controller('inventarioCtrl', function($scope, Database, $ionicModal, $ionicLoading, $ionicPopup) {
+
+    // helper functions for loading
+    var showLoading = function () {
+        $ionicLoading.show({
+            template: '<i class="ion-loading-b"></i>',
+            noBackdrop: true
+        });
+    };
+
+    var hideLoading = function () {
+        $ionicLoading.hide();
+    };
 
     $scope.form = {barcodeToggle : true, searchString : ''};
 
-    $scope.getItem = function (searchString, barcodeBool) {
+    //Create and load in the modal
+    $ionicModal.fromTemplateUrl('templates/quantity.html', function(modal) {
+        $scope.qtyModal = modal;
+    }, {
+        scope: $scope,
+        animation: 'slide-in-up',
+        focusFirstInput: true
+    });
 
+    $scope.getItemList = function (searchString, barcodeBool) {
+
+        showLoading();
         $scope.form.searchString = '';
 
         if(searchString) {
             if (barcodeBool) {
                 Database.getItemFromBarcode(searchString).success(function () {
-                    //populate the scope with data
-                    $scope.items = Database.itemList;
-                    document.getElementById("searchField").focus();
+                    hideLoading();
+                    $scope.qtyModal.show();
                 });
             } else {
                 document.getElementById("searchField").focus();
@@ -22,9 +43,54 @@ angular.module('app.controllers', [])
         }
     };
 
-    $scope.removeItem = function (item, index) {
-        //remove song from favorites
-        Database.removeItemFromList(item, index);
+    $scope.ModifyQty = function (index) {
+        //modify item in list
+        $scope.form.quantity = $scope.items[index].qty;
+
+        //save the index value in the scope (is this the right way to do this?)
+        $scope.index = index;
+
+        $scope.qtyModal.show();
     };
+
+    $scope.removeItem = function (item, index) {
+
+        $ionicPopup.confirm({title: 'Cancella',
+            template: 'Cancellare l\'articolo?'
+        }).then(function(res) {
+            if(res) {
+                //remove item from list
+                Database.removeItemFromList(item, index);
+            }
+        });
+    };
+
+    $scope.cancelQtyModal = function () {
+        $scope.qtyModal.hide();
+    };
+
+    $scope.insertItemToInventory = function (index) {
+
+        if(index) {
+            //just updating
+            $scope.items[index].qty = $scope.form.quantity;
+        } else {
+            //new item from server populate the item scope with data
+            $scope.items = Database.itemList;
+
+            $scope.items[0].qty = $scope.form.quantity;
+        }
+
+        //reset the quantity
+        $scope.form.quantity = '';
+
+        //reset the saved value for index
+        $scope.index = null;
+
+        $scope.qtyModal.hide();
+
+    };
+
+
 });
  

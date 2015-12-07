@@ -1,0 +1,22 @@
+<div class="modal">
+    <!-- MOdal header bar-->
+    <ion-header-bar class="bar-secondary">
+        <h1 class="title">Quantita</h1>
+        <button class="button button-clear button-positive" ng-click="cancelQtyModal()">Cancel</button>
+    </ion-header-bar>
+
+    <!-- modal content area-->
+    <ion-content>
+        <form ng-submit="insertItemToInventory(index)">
+            <div class="list">
+                    <label class="item item-input" id="qtyField" focus-me>
+                        <i class="icon ion-android-create placeholder-icon"></i>
+                        <input type="number" placeholder="Quantita" ng-model="form.quantity">
+                    </label>
+            </div>
+            <div class="padding">
+                <button type="submit" class="button button-block button-positive">Ok</button>
+            </div>
+        </form>
+    </ion-content>
+</div>
