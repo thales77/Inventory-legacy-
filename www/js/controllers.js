@@ -35,16 +35,16 @@ angular.module('app.controllers', [])
                 Database.getItemFromBarcode(searchString).then(
                     //on success
                     function () {
-                    hideLoading();
-                    $scope.qtyModal.show();
+                        hideLoading();
+                        $scope.qtyModal.show();
                 },
                     //on error
                     function (){
-                    hideLoading();
-                    $ionicPopup.alert({
-                        title: 'Errore',
-                        template: 'Articolo non trovato'
-                    });
+                        hideLoading();
+                        $ionicPopup.alert({
+                            title: 'Errore',
+                            template: 'Articolo non trovato'
+                        });
 
                 });
             }
