@@ -32,17 +32,18 @@ angular.module('app.controllers', [])
 
         if(searchString) {
             if (barcodeBool) {
-                Database.getItemFromBarcode(searchString).success(function () {
+                Database.getItemFromBarcode(searchString).then(
+                    //on success
+                    function () {
                     hideLoading();
                     $scope.qtyModal.show();
-                }, function (response){
-
+                },
+                    //on error
+                    function (){
+                    hideLoading();
                     $ionicPopup.alert({
                         title: 'Errore',
                         template: 'Articolo non trovato'
-                    }).then( function () {
-                        console.log(response);
-                        document.getElementById("searchField").focus();
                     });
 
                 });
