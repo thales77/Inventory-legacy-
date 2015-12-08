@@ -16,12 +16,21 @@ angular.module('app.controllers', [])
 
     $scope.form = {barcodeToggle : true, searchString : ''};
 
-    //Create and load in the modal
+    //Create and load in the modal inserting quantities
     $ionicModal.fromTemplateUrl('templates/quantity.html', function(modal) {
         $scope.qtyModal = modal;
     }, {
         scope: $scope,
         animation: 'slide-in-up',
+        focusFirstInput: true
+    });
+
+    //Create and load in the modal for choosing items from search results
+    $ionicModal.fromTemplateUrl('templates/searchResults.html', function(modal) {
+        $scope.searchResults = modal;
+    }, {
+        scope: $scope,
+        animation: 'slide-in-down',
         focusFirstInput: true
     });
 
@@ -50,12 +59,11 @@ angular.module('app.controllers', [])
                 });
                 // else looking for item with normal search string
             } else {
-                Database.getItemFromBarcode(searchString).then(
+                Database.getItemFromSearchString(searchString).then(
                     //on success
                     function () {
-                        //TODO
-                        //popup itemList modal
                         hideLoading();
+                        $scope.searchResults.show();
                     },
                     //on error
                     function (){
@@ -94,6 +102,10 @@ angular.module('app.controllers', [])
 
     $scope.cancelQtyModal = function () {
         $scope.qtyModal.hide();
+    };
+
+    $scope.cancelSearchResultsModal = function () {
+        $scope.searchResults.hide();
     };
 
     $scope.insertItemToInventory = function (index) {
