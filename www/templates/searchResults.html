@@ -1,16 +1,14 @@
 <div class="modal">
     <!-- MOdal header bar-->
     <ion-header-bar class="bar-secondary">
-        <h1 class="title">Risulatati ricerca</h1>
+        <h1 class="title">Risultati ricerca</h1>
         <button class="button button-clear button-positive" ng-click="cancelSearchResultsModal()">Annulla</button>
     </ion-header-bar>
 
     <!-- modal content area-->
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="item in searchList" class="item-icon-right">
-
-                <span class="badge badge-assertive">{{ item.qty }}</span>
+            <ion-item ng-repeat="item in searchList" class="item-icon-right"  ng-click="selectItemFromSearch($index)">
 
                 <h2>{{item.codiceArticolo}}</h2>
 
@@ -18,13 +16,6 @@
 
                 <p>{{item.fornitoreArticolo}}</p>
 
-                <ion-option-button class="button-positive" ng-click="ModifyQty($index)">
-                    Modifica
-                </ion-option-button>
-
-                <ion-option-button class="button-assertive" ng-click="removeItem(item, $index)">
-                    Elimina
-                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>

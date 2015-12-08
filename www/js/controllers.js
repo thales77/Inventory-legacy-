@@ -15,6 +15,7 @@ angular.module('app.controllers', [])
     };
 
     $scope.form = {barcodeToggle : true, searchString : ''};
+    $scope.inventory = [];
 
     //Create and load in the modal inserting quantities
     $ionicModal.fromTemplateUrl('templates/quantity.html', function(modal) {
@@ -27,7 +28,7 @@ angular.module('app.controllers', [])
 
     //Create and load in the modal for choosing items from search results
     $ionicModal.fromTemplateUrl('templates/searchResults.html', function(modal) {
-        $scope.searchResults = modal;
+        $scope.searchResultsModal = modal;
     }, {
         scope: $scope,
         animation: 'slide-in-down',
@@ -65,7 +66,7 @@ angular.module('app.controllers', [])
                         hideLoading();
                         //new item from server populate the search list scope with data
                         $scope.searchList = Database.searchList;
-                        $scope.searchResults.show();
+                        $scope.searchResultsModal.show();
                     },
                     //on error
                     function (){
@@ -81,6 +82,7 @@ angular.module('app.controllers', [])
     };
 
     $scope.ModifyQty = function (index) {
+
         //modify item in list
         $scope.form.quantity = $scope.inventory[index].qty;
 
@@ -97,7 +99,7 @@ angular.module('app.controllers', [])
         }).then(function(res) {
             if(res) {
                 //remove item from list
-                Database.removeItemFromList(item, index);
+                Database.removeItemFromInventory(item, index);
             }
         });
     };
@@ -107,8 +109,19 @@ angular.module('app.controllers', [])
     };
 
     $scope.cancelSearchResultsModal = function () {
-        $scope.searchResults.hide();
+        $scope.searchResultsModal.hide();
     };
+
+
+    $scope.selectItemFromSearch = function (index) {
+
+        $scope.searchResultsModal.hide();
+        Database.searchList[index].qty = parseFloat(Database.searchList[index].dispTot);
+        $scope.inventory.unshift(Database.searchList[index]);
+
+        $scope.ModifyQty(index+1);
+    };
+
 
     $scope.insertItemToInventory = function (index) {
 
