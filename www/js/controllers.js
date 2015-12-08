@@ -25,13 +25,13 @@ angular.module('app.controllers', [])
         focusFirstInput: true
     });
 
-    $scope.getItemList = function (searchString, barcodeBool) {
+    $scope.getItem = function (searchString, barcodeBool) {
 
         showLoading();
         $scope.form.searchString = '';
 
         if(searchString !== "") {
-            // if we are looking fro an item using a barcode
+            // if we are looking for an item using a barcode
             if (barcodeBool) {
                 Database.getItemFromBarcode(searchString).then(
                     //on success
@@ -50,14 +50,29 @@ angular.module('app.controllers', [])
                 });
                 // else looking for item with normal search string
             } else {
-                Database.getItemFromBarcode(searchString);
+                Database.getItemFromBarcode(searchString).then(
+                    //on success
+                    function () {
+                        //TODO
+                        //popup itemList modal
+                        hideLoading();
+                    },
+                    //on error
+                    function (){
+                        hideLoading();
+                        $ionicPopup.alert({
+                            title: 'Errore',
+                            template: 'Articolo non trovato'
+                        });
+
+                    });
             }
         }
     };
 
     $scope.ModifyQty = function (index) {
         //modify item in list
-        $scope.form.quantity = $scope.items[index].qty;
+        $scope.form.quantity = $scope.inventory[index].qty;
 
         //save the index value in the scope (is this the right way to do this?)
         $scope.index = index;
@@ -85,12 +100,12 @@ angular.module('app.controllers', [])
 
         if(index) {
             //just updating
-            $scope.items[index].qty = $scope.form.quantity;
+            $scope.inventory[index].qty = $scope.form.quantity;
         } else {
             //new item from server populate the item scope with data
-            $scope.items = Database.itemList;
+            $scope.inventory = Database.inventoryList;
 
-            $scope.items[0].qty = $scope.form.quantity;
+            $scope.inventory[0].qty = $scope.form.quantity;
         }
 
         //reset the quantity

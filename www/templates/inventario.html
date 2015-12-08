@@ -7,10 +7,10 @@
             </label>
             <div class="spacer" style="width: 300px; height: 21px;"></div>
             <ion-toggle toggle-class="toggle-positive" name="BarcodeToggle" ng-model="form.barcodeToggle" ng-checked="form.barcodeToggle">Barcode</ion-toggle>
-            <button class="button button-positive button-block button-large icon-left ion-ios-barcode-outline" ng-click="getItemList(form.searchString, form.barcodeToggle)">Vai</button>
+            <button class="button button-positive button-block button-large icon-left ion-ios-barcode-outline" ng-click="getItem(form.searchString, form.barcodeToggle)">Vai</button>
         </form>
         <ion-list>
-            <ion-item ng-repeat="item in items" class="item-icon-right">
+            <ion-item ng-repeat="item in inventory" class="item-icon-right">
 
                 <span class="badge badge-assertive">{{ item.qty }}</span>
 
