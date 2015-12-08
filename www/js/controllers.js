@@ -30,7 +30,8 @@ angular.module('app.controllers', [])
         showLoading();
         $scope.form.searchString = '';
 
-        if(searchString) {
+        if(searchString !== "") {
+            // if we are looking fro an item using a barcode
             if (barcodeBool) {
                 Database.getItemFromBarcode(searchString).then(
                     //on success
@@ -47,6 +48,9 @@ angular.module('app.controllers', [])
                         });
 
                 });
+                // else looking for item with normal search string
+            } else {
+                Database.getItemFromBarcode(searchString);
             }
         }
     };

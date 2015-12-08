@@ -3,7 +3,8 @@ angular.module('app.services', [])
 .factory('Database', function($http, $q, SERVER) {
 
     var o = {
-        itemList : []
+        inventoryList : [],
+        searchList : []
     };
 
 
@@ -18,8 +19,13 @@ angular.module('app.services', [])
             }
         }).success(function (data) {
                 //merge the data into the queue
-                o.itemList.unshift(data);
+                o.inventoryList.unshift(data);
         });
+    };
+
+
+    o.getItemFromSearchString = function () {
+        //TODO
     };
 
     o.removeItemFromList = function (item, index) {
