@@ -24,8 +24,22 @@ angular.module('app.services', [])
     };
 
 
-    o.getItemFromSearchString = function () {
-        //TODO
+    o.getItemFromSearchString = function (searchString) {
+
+        //reset
+        o.searchList = [];
+
+        return $http({
+            method: 'GET',
+            url: SERVER.url + '/',
+            params: {action:'getItemList',
+                searchString:searchString,
+                fasciaSconto:3
+            }
+        }).success(function (data) {
+            //merge the data into the queue
+            o.searchList.unshift(data);
+        });
     };
 
     o.removeItemFromList = function (item, index) {

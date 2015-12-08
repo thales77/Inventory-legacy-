@@ -63,6 +63,8 @@ angular.module('app.controllers', [])
                     //on success
                     function () {
                         hideLoading();
+                        //new item from server populate the search list scope with data
+                        $scope.searchList = Database.searchList;
                         $scope.searchResults.show();
                     },
                     //on error
@@ -114,7 +116,7 @@ angular.module('app.controllers', [])
             //just updating
             $scope.inventory[index].qty = $scope.form.quantity;
         } else {
-            //new item from server populate the item scope with data
+            //new item from server populate the inventory scope with data
             $scope.inventory = Database.inventoryList;
 
             $scope.inventory[0].qty = $scope.form.quantity;
