@@ -37,10 +37,13 @@ angular.module('app.controllers', [])
 
     $scope.getItem = function (searchString, barcodeBool) {
 
-        showLoading();
-        $scope.form.searchString = '';
 
-        if(searchString !== "") {
+        if(searchString.length > 0) {
+
+            showLoading();
+            $scope.form.searchString = '';
+
+
             // if we are looking for an item using a barcode
             if (barcodeBool) {
                 Database.getItemFromBarcode(searchString).then(
@@ -116,10 +119,9 @@ angular.module('app.controllers', [])
     $scope.selectItemFromSearch = function (index) {
 
         $scope.searchResultsModal.hide();
-        Database.searchList[index].qty = parseFloat(Database.searchList[index].dispTot);
-        $scope.inventory.unshift(Database.searchList[index]);
+        Database.selectItem(index);
+        $scope.qtyModal.show();
 
-        $scope.ModifyQty(index+1);
     };
 
 

@@ -10,9 +10,13 @@
         <ion-list>
             <ion-item ng-repeat="item in searchList" class="item-icon-right"  ng-click="selectItemFromSearch($index)">
 
+                <h1 ng-show="!searchList.length">Nessun articolo trovato</h1>
+
                 <h2>{{item.codiceArticolo}}</h2>
 
-                <p>{{item.descrizione}}</p>
+                <h3>{{item.descrizione}}</h3>
+
+                <p>{{item.codForn1}} - {{item.codForn2}}</p>
 
                 <p>{{item.fornitoreArticolo}}</p>
 

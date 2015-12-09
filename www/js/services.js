@@ -19,7 +19,7 @@ angular.module('app.services', [])
                 user: 'Inventory'
             }
         }).success(function (data) {
-                //merge the data into the queue
+                //merge the data into the inventory array
                 o.inventoryList.unshift(data);
         });
     };
@@ -33,7 +33,7 @@ angular.module('app.services', [])
         //options required by server API to return results
         var itemSearchOptions = JSON.stringify(['descrizione', 'codiceSider', 'codiceForn']),
             listOffset = 0,
-            perPage = 20;
+            perPage = 30;
 
         return $http({
             method: 'GET',
@@ -48,16 +48,23 @@ angular.module('app.services', [])
             }
         }).success(function (data) {
             //merge the data into the queue
-            o.searchList = data.record;
+            if(data.record) {
+                o.searchList = data.record;
+            }
         });
+    };
+
+    o.selectItem = function (index) {
+        //merge the data into the inventory array
+        o.inventoryList.unshift(o.searchList[index]);
     };
 
     o.removeItemFromInventory = function (item, index) {
         // make sure there's an item to remove
         if (!item) return false;
 
-        // add to favorites array
-        o.itemList.splice(index, 1);
+        // remove from inventory
+        o.inventoryList.splice(index, 1);
     };
 
     return o;
