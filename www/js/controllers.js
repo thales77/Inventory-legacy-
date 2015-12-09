@@ -148,5 +148,17 @@ angular.module('app.controllers', [])
     };
 
 
+    $scope.saveInventory = function () {
+
+        $ionicPopup.confirm({title: 'Salva inventario',
+            template: 'Salvare l\'inventario sul server remoto?'
+        }).then(function(res) {
+            if(res) {
+                Database.saveInventoryToServer($scope.inventory);
+            }
+        });
+    };
+
+
 });
  

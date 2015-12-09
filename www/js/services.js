@@ -67,6 +67,12 @@ angular.module('app.services', [])
         o.inventoryList.splice(index, 1);
     };
 
+    o.saveInventoryToServer = function (inventory) {
+        //persist favorites to the server
+        /*return $http.post(SERVER.url + '/inventory', {});*/
+        //TODO
+    };
+
     return o;
 });
 
