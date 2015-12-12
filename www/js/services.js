@@ -71,6 +71,9 @@ angular.module('app.services', [])
         //persist inventory to the server action: insertItemToInventory
         /*return $http.post(SERVER.url + '/inventory', {});*/
         //TODO
+
+
+
     };
 
     return o;
