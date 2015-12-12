@@ -68,7 +68,7 @@ angular.module('app.services', [])
     };
 
     o.saveInventoryToServer = function (inventory) {
-        //persist favorites to the server
+        //persist inventory to the server action: insertItemToInventory
         /*return $http.post(SERVER.url + '/inventory', {});*/
         //TODO
     };
